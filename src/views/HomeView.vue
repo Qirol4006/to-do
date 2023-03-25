@@ -1,18 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="flex flex-row w-full h-[100vh]">
+    <div class="flex flex-col">
+      <ListsComponent/>
+    </div>
+    <div class="flex flex-col w-full items-center">
+      <router-view/>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script setup>
+import ListsComponent from "@/components/Lists/ListsComponent.vue";
 
-@Options({
-  components: {
-    HelloWorld,
-  },
-})
-export default class HomeView extends Vue {}
+// Hooks
+
 </script>

@@ -1,30 +1,55 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view/>
 </template>
 
+<script setup>
+// region Imports
+import {watch} from "vue";
+import {useRouter} from "vue-router";
+import {useStore} from "vuex";
+
+// endregion
+
+// region State
+const router = useRouter()
+const store = useStore()
+
+// endregion
+
+// region Directives
+watch(() => router.currentRoute.value,
+    (newRoute) => {
+      if (!localStorage.getItem("token") && (newRoute.path !== '/login' && newRoute.path !== '/register')){
+        router.push('/login')
+        store.commit('changeLoginPage', true)
+      }else {
+        store.commit('changeLoginPage', false)
+      }
+    })
+
+// endregion
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+/* total width */
+::-webkit-scrollbar {
+  width: 14px;
 }
 
-nav {
-  padding: 30px;
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 14px 14px transparent;
+  border: solid 4px transparent;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 14px 14px #bbbbbe;
+  border: solid 4px transparent;
+  border-radius: 14px;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+/* set button(top and bottom of the scrollbar) */
+::-webkit-scrollbar-button {
+  display: none;
 }
 </style>
